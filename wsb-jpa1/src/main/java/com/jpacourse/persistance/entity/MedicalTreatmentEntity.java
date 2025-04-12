@@ -27,7 +27,9 @@ public class MedicalTreatmentEntity {
 	public Long getId() {
 		return id;
 	}
-
+	public String getTreatmentType() {
+		return type != null ? type.toString() : null;
+	}
 	public void setId(Long id) {
 		this.id = id;
 	}

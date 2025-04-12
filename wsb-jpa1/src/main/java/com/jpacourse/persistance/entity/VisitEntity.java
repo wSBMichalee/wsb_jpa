@@ -1,10 +1,9 @@
 package com.jpacourse.persistance.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "VISIT")
@@ -14,17 +13,18 @@ public class VisitEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "visit_date")
+	private LocalDateTime visitDate;
+
+	@Column(name = "description")
 	private String description;
 
-	@Column(nullable = false)
-	private LocalDateTime time;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "patient_id")
 	private PatientEntity patient;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "doctor_id")
 	private DoctorEntity doctor;
 
 	@ManyToMany
@@ -35,7 +35,30 @@ public class VisitEntity {
 	)
 	private Set<MedicalTreatmentEntity> treatments = new HashSet<>();
 
-	// Istniejące gettery i settery
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getVisitDate() {
+		return visitDate;
+	}
+
+	public void setVisitDate(LocalDateTime visitDate) {
+		this.visitDate = visitDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public PatientEntity getPatient() {
 		return patient;
@@ -59,13 +82,5 @@ public class VisitEntity {
 
 	public void setTreatments(Set<MedicalTreatmentEntity> treatments) {
 		this.treatments = treatments;
-	}
-
-	public void addTreatment(MedicalTreatmentEntity treatment) {
-		treatments.add(treatment);
-	}
-
-	public void removeTreatment(MedicalTreatmentEntity treatment) {
-		treatments.remove(treatment);
 	}
 }

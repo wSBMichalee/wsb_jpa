@@ -31,6 +31,9 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+	// Nowe pole
+	private String insuranceNumber;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "address_id")
 	private AddressEntity address;
@@ -46,7 +49,16 @@ public class PatientEntity {
 	)
 	private List<DoctorEntity> doctors = new ArrayList<>();
 
-	// Gettery i settery
+	// Dodanie gettera i settera dla nowego pola
+	public String getInsuranceNumber() {
+		return insuranceNumber;
+	}
+
+	public void setInsuranceNumber(String insuranceNumber) {
+		this.insuranceNumber = insuranceNumber;
+	}
+
+	// Pozostałe gettery i settery pozostają bez zmian
 	public Long getId() {
 		return id;
 	}
