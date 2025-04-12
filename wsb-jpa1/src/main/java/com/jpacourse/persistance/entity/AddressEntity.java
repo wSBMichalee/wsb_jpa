@@ -1,10 +1,11 @@
 package com.jpacourse.persistance.entity;
 
-
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "ADDRESS")
+@Table(name = "address")
 public class AddressEntity {
 
 	@Id
@@ -19,6 +20,13 @@ public class AddressEntity {
 
 	private String postalCode;
 
+	@OneToMany(mappedBy = "address")
+	private List<PatientEntity> patients = new ArrayList<>();
+
+	@OneToMany(mappedBy = "address")
+	private List<DoctorEntity> doctors = new ArrayList<>();
+
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
@@ -59,4 +67,19 @@ public class AddressEntity {
 		this.postalCode = postalCode;
 	}
 
+	public List<PatientEntity> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(List<PatientEntity> patients) {
+		this.patients = patients;
+	}
+
+	public List<DoctorEntity> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<DoctorEntity> doctors) {
+		this.doctors = doctors;
+	}
 }

@@ -1,11 +1,13 @@
 package com.jpacourse.persistance.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PATIENT")
+@Table(name = "patients")
 public class PatientEntity {
 
 	@Id
@@ -29,6 +31,22 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id")
+	private AddressEntity address;
+
+	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<VisitEntity> visits = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(
+			name = "patients_doctors",
+			joinColumns = @JoinColumn(name = "patient_id"),
+			inverseJoinColumns = @JoinColumn(name = "doctor_id")
+	)
+	private List<DoctorEntity> doctors = new ArrayList<>();
+
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
@@ -85,4 +103,47 @@ public class PatientEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
+	public List<DoctorEntity> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<DoctorEntity> doctors) {
+		this.doctors = doctors;
+	}
+
+	public void addVisit(VisitEntity visit) {
+		visits.add(visit);
+		visit.setPatient(this);
+	}
+
+	public void removeVisit(VisitEntity visit) {
+		visits.remove(visit);
+		visit.setPatient(null);
+	}
+
+	public void addDoctor(DoctorEntity doctor) {
+		doctors.add(doctor);
+		doctor.getPatients().add(this);
+	}
+
+	public void removeDoctor(DoctorEntity doctor) {
+		doctors.remove(doctor);
+		doctor.getPatients().remove(this);
+	}
 }

@@ -3,9 +3,11 @@ package com.jpacourse.persistance.entity;
 import com.jpacourse.persistance.enums.TreatmentType;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "MEDICAL_TREATMENT")
+@Table(name = "medical_treatments")
 public class MedicalTreatmentEntity {
 
 	@Id
@@ -16,8 +18,12 @@ public class MedicalTreatmentEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private TreatmentType type;
+	private TreatmentType type; // Używa Twojej enumeracji: USG, EKG, RTG
 
+	@ManyToMany(mappedBy = "treatments")
+	private Set<VisitEntity> visits = new HashSet<>();
+
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
@@ -42,4 +48,11 @@ public class MedicalTreatmentEntity {
 		this.type = type;
 	}
 
+	public Set<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(Set<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }
