@@ -26,4 +26,4 @@ Nastepnie zmien adnotacje na
 
 i powtorz test i obserwacje. Wnioski zapisz na dole tego pliku i skomituj.
 
-Do wybranej encji dodaj wersjonowanie, oraz napisz test (w DAO) sprawdzajacy rownolegla modyfikacje (OptimisticLock)
+Do wybranej encji dodaj wersjonowanie, oraz napisz test (w DAO) sprawdzajacy rownolegla modyfikacje (OptimisticLock) 

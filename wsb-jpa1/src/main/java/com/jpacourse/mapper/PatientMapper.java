@@ -24,6 +24,7 @@ public final class PatientMapper {
         patientTO.setDateOfBirth(patientEntity.getDateOfBirth());
         patientTO.setInsuranceNumber(patientEntity.getInsuranceNumber());
         patientTO.setAddress(AddressMapper.mapToTO(patientEntity.getAddress()));
+        patientTO.setHeight(patientEntity.getHeight());
 
         return patientTO;
     }

@@ -13,6 +13,15 @@ public class PatientTO implements Serializable {
     private LocalDate dateOfBirth;
     private String insuranceNumber;
     private AddressTO address;
+    private int  height;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     public Long getId() {
         return id;
@@ -85,4 +94,5 @@ public class PatientTO implements Serializable {
     public void setAddress(AddressTO address) {
         this.address = address;
     }
+
 }

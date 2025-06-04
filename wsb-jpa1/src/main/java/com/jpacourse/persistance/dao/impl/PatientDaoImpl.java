@@ -36,25 +36,40 @@ public class PatientDaoImpl extends AbstractDao <PatientEntity,Long> implements 
         entityManager.merge(patient);
 
     }
-    public List<PatientEntity> findbyLastName (String pLastName){
-        return entityManager.createQuery("select pat from PatientEntity pat" +
-                " where pat.lastName like :param1",PatientEntity.class).setParameter("param1","%"+pLastName+"%").getResultList();
 
+
+    @Override
+    public List<PatientEntity> findByLastName(String lastName) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE p.lastName = :lastName", PatientEntity.class)
+                .setParameter("lastName", lastName)
+                .getResultList();
     }
 
-    public List<VisitEntity> findPatientbyId (Long id){
-        return entityManager.createQuery("select vis from VisitEntity vis" +
-                " where vis.patient =:param1",VisitEntity.class).setParameter("param1", id).getResultList();
+
+
+    @Override
+    public List<PatientEntity> findPatientsWithMoreThanXVisits(long count) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE SIZE(p.visits) > :count", PatientEntity.class)
+                .setParameter("count", (int) count)
+                .getResultList();
     }
 
-    public List<PatientEntity> findByMoreVisits(Long visNumber){
-        return entityManager.createQuery("select pat from PatientEntity pat" +
-                " join pat.visitEntityCollection vis group by vis having count(vis)>:param1" ,PatientEntity.class).setParameter("param1",visNumber).getResultList();
+    @Override
+    public List<PatientEntity> findByHeightGreaterThan(int height) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p WHERE p.height > :height", PatientEntity.class)
+                .setParameter("height", height)
+                .getResultList();
     }
 
-    public List<PatientEntity> findByOlderThan(long age){
-        return entityManager.createQuery("select pat from PatientEntity pat" +
-                " where pat.age>:param1",PatientEntity.class).setParameter("param1",age).getResultList();
+    @Override
+    public List<VisitEntity> findVisitsByPatientId(long l) {
+        return entityManager.createQuery(
+                        "SELECT v FROM VisitEntity v WHERE v.patient.id = :id", VisitEntity.class)
+                .setParameter("id", l)
+                .getResultList();
     }
 
 }

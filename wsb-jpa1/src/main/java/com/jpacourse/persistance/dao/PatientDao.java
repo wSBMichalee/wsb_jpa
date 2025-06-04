@@ -9,13 +9,12 @@ import java.util.List;
 public interface PatientDao extends Dao<PatientEntity, Long> {
     void addVisitToPatient(Long patientId, Long doctorId, LocalDateTime date,String describtion);
 
-    List<PatientEntity> findbyLastName (String pLastName);
-
-    List<VisitEntity> findPatientbyId (Long id);
+    List<PatientEntity> findByLastName(String lastName);
 
 
-    List<PatientEntity> findByMoreVisits(Long visNumber);
+    List<PatientEntity> findPatientsWithMoreThanXVisits(long count);
 
+    List<PatientEntity> findByHeightGreaterThan(int height);
 
-    List<PatientEntity> findByOlderThan(long age);
+    List<VisitEntity> findVisitsByPatientId(long l);
 }
