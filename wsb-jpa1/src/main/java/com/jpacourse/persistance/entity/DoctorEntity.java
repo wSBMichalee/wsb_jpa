@@ -20,7 +20,7 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	private String lastName;
 
-	@Column(nullable = false)
+ 	@Column(nullable = false)
 	private String telephoneNumber;
 
 	private String email;

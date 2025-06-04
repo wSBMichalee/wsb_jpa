@@ -35,7 +35,7 @@ INSERT INTO doctors (id, first_name, last_name, telephone_number, email, doctor_
 VALUES (3, 'Agnieszka', 'Dąbrowska', '+48 678 901 234', 'agnieszka.dabrowska@example.com', 'D003', 'DERMATOLOGIST', 2);
 
 INSERT INTO doctors (id, first_name, last_name, telephone_number, email, doctor_number, specialization, address_id)
-VALUES (4, 'Radowsław', 'ToFrajer', '+48 7333 732 777', 'Radosław.tofrajer@example.com', 'D004', 'OCULIST', 4);
+VALUES (4, 'Radowsław', 'Rumian', '+48 7333 732 777', 'Radosław.rumian@example.com', 'D004', 'OCULIST', 4);
 
 
 INSERT INTO medical_treatments (id, description, type)
