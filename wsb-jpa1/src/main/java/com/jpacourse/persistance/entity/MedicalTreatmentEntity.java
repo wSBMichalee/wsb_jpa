@@ -18,12 +18,12 @@ public class MedicalTreatmentEntity {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private TreatmentType type; // Używa Twojej enumeracji: USG, EKG, RTG
+	private TreatmentType type;
 
 	@ManyToMany(mappedBy = "treatments")
 	private Set<VisitEntity> visits = new HashSet<>();
 
-	// Gettery i settery
+
 	public Long getId() {
 		return id;
 	}

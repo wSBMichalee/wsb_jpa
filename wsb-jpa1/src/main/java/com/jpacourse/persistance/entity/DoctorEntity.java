@@ -42,7 +42,7 @@ public class DoctorEntity {
 	@ManyToMany(mappedBy = "doctors")
 	private List<PatientEntity> patients = new ArrayList<>();
 
-	// Gettery i settery
+
 	public Long getId() {
 		return id;
 	}

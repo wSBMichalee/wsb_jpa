@@ -26,7 +26,7 @@ public class AddressEntity {
 	@OneToMany(mappedBy = "address")
 	private List<DoctorEntity> doctors = new ArrayList<>();
 
-	// Gettery i settery
+
 	public Long getId() {
 		return id;
 	}
