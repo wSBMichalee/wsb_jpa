@@ -2,7 +2,6 @@ package com.jpacourse.persistance.dao;
 
 import com.jpacourse.persistance.entity.PatientEntity;
 import com.jpacourse.persistance.entity.VisitEntity;
-import com.jpacourse.service.PatientService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class PatientDaoImplTest {
+class PatientDaoTest {
 
     @Autowired
     private PatientDao patientDao;
