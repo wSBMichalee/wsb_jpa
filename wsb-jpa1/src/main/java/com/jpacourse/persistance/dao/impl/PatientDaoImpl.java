@@ -18,23 +18,17 @@ public class PatientDaoImpl extends AbstractDao <PatientEntity,Long> implements 
     private DoctorDao doctorDao;
 
     @Override
-    public void addVisitToPatient( Long patientId,  Long doctorId, LocalDateTime visitDate, String description) {
+    public void addVisitToPatient(Long patientId, Long doctorId, LocalDateTime date, String description) {
+        PatientEntity patient = entityManager.find(PatientEntity.class, patientId);
+        DoctorEntity doctor = entityManager.find(DoctorEntity.class, doctorId);
 
-        PatientEntity patient = findOne(patientId);
-        DoctorEntity doctor = doctorDao.findOne(doctorId);
+        VisitEntity visit = new VisitEntity();
+        visit.setPatient(patient);
+        visit.setDoctor(doctor);
+        visit.setVisitDate(date);
+        visit.setDescription(description);
 
-
-        VisitEntity visitEntity = new VisitEntity();
-        visitEntity.setPatient(patient);
-        visitEntity.setDoctor(doctor);
-        visitEntity.setDescription(description);
-        visitEntity.setVisitDate(visitDate);
-
-
-        patient.getVisits().add(visitEntity);
-        doctor.getVisits().add(visitEntity);
-        entityManager.merge(patient);
-
+        entityManager.persist(visit);
     }
 
 

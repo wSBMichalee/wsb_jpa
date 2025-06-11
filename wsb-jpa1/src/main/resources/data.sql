@@ -49,18 +49,18 @@ VALUES (3, 'Zdjęcie rentgenowskie klatki piersiowej', 'RTG');
 
 
 
-INSERT INTO visit (id, visit_date, description, patient_id, doctor_id)
-VALUES (1, '2023-06-10 10:00:00', 'Kontrola ciśnienia, zalecenie diety niskosodowej', 1, 1);
+INSERT INTO visit ( visit_date, description, patient_id, doctor_id)
+VALUES( '2023-06-10 10:00:00', 'Kontrola ciśnienia, zalecenie diety niskosodowej', 1, 1);
 
 
-INSERT INTO visit (id, visit_date, description, patient_id, doctor_id)
-VALUES (2, '2023-06-11 11:30:00', 'Badanie wzroku, przepisanie nowych okularów', 2, 2);
+INSERT INTO visit ( visit_date, description, patient_id, doctor_id)
+VALUES ( '2023-06-11 11:30:00', 'Badanie wzroku, przepisanie nowych okularów', 2, 2);
 
-INSERT INTO visit (id, visit_date, description, patient_id, doctor_id)
-VALUES (3, '2023-06-12 14:00:00', 'Leczenie trądziku, przepisanie maści', 3, 3);
+INSERT INTO visit ( visit_date, description, patient_id, doctor_id)
+VALUES ( '2023-06-12 14:00:00', 'Leczenie trądziku, przepisanie maści', 3, 3);
 
-INSERT INTO visit (id, visit_date, description, patient_id, doctor_id)
-VALUES (4, '2023-06-15 16:00:00', 'Kolejna kontrola', 1, 2);
+INSERT INTO visit ( visit_date, description, patient_id, doctor_id)
+VALUES ( '2023-06-15 16:00:00', 'Kolejna kontrola', 1, 2);
 
 
 INSERT INTO VISIT_TREATMENT (visit_id, treatment_id) VALUES (1, 2);
