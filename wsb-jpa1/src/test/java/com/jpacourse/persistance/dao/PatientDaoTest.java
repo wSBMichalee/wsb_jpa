@@ -4,12 +4,15 @@ import com.jpacourse.dto.PatientTO;
 import com.jpacourse.persistance.entity.PatientEntity;
 import com.jpacourse.persistance.entity.VisitEntity;
 import com.jpacourse.service.PatientService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +22,7 @@ class PatientDaoTest {
 
     @Autowired
     private PatientDao patientDao;
+
     @Transactional
     @Test
     void testFindByLastName() {
@@ -26,6 +30,7 @@ class PatientDaoTest {
         assertFalse(patients.isEmpty());
         assertEquals("Kowalski", patients.get(0).getLastName());
     }
+
     @Transactional
     @Test
     void testFindByHeightGreaterThan() {
@@ -33,6 +38,7 @@ class PatientDaoTest {
         assertFalse(tallPatients.isEmpty());
         assertTrue(tallPatients.get(0).getHeight() > 170);
     }
+
     @Transactional
     @Test
     void testFindPatientsWithMoreThanXVisits() {
@@ -51,6 +57,7 @@ class PatientDaoTest {
 
     @Autowired
     private PatientService patientService;
+
     @Transactional
     @Test
     public void whenFindById_existingId_thenReturnPatientTO() {
@@ -66,4 +73,49 @@ class PatientDaoTest {
         assertEquals(LocalDate.of(1980, 1, 1), patient.getDateOfBirth());
         assertEquals(145, patient.getHeight());
     }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional
+    @Test
+    public void testAddVisitToPatient() {
+
+        entityManager.createQuery("DELETE FROM VisitEntity").executeUpdate();
+
+
+        Long patientId = 1L;
+        Long doctorId = 2L;
+        LocalDateTime visitDate = LocalDateTime.of(2023, 7, 1, 10, 0);
+        String description = "Wizyta testowa";
+
+
+        patientDao.addVisitToPatient(patientId, doctorId, visitDate, description);
+
+
+        entityManager.flush();
+        entityManager.clear();
+
+
+        PatientEntity patient = entityManager.find(PatientEntity.class, patientId);
+        assertNotNull(patient );
+
+        boolean visitFound = patient.getVisits().stream()
+                .anyMatch(v -> visitDate.equals(v.getVisitDate()) && description.equals(v.getDescription()));
+
+        assertTrue(visitFound);
+
+
+        VisitEntity visit = patient.getVisits().stream()
+                .filter(v -> visitDate.equals(v.getVisitDate()) && description.equals(v.getDescription()))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(visit);
+        assertEquals(patientId, visit.getPatient().getId());
+        assertEquals(doctorId, visit.getDoctor().getId());
+    }
+    // Podczas implementacji testu dodawania wizyty (addVisitToPatient) napotkaliśmy błąd naruszenia ograniczenia klucza głównego.
+    //Problem wynikał z błędnej konfiguracji generowania @Id w encji VisitEntity oraz wielokrotnego wstawiania tych samych danych w testach bez czyszczenia bazy.
+    // Rozwiązaniem było poprawne oznaczenie id jako generowanego oraz zapewnienie czystości danych testowych.
 }
